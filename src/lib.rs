@@ -1,6 +1,7 @@
 use std::fs::File;
 use std::io::prelude::*;
 use std::io::BufReader;
+use std::process::{Command, Output};
 use std::{fs, io};
 
 pub fn grep(content: BufReader<File>, pattern: &str, mut writer: impl std::io::Write) {
@@ -44,5 +45,13 @@ pub fn ls(
         writeln!(writer, "{}", entry.to_str().unwrap()).unwrap();
     }
 
+    Ok(())
+}
+
+pub fn whoami(mut writer: impl std::io::Write) -> Result<(), Box<dyn std::error::Error>> {
+    let output: Output = Command::new("whoami")
+        .output()
+        .expect("failed to execute process");
+    writeln!(writer, "{}", String::from_utf8(output.stdout).unwrap()).unwrap();
     Ok(())
 }
