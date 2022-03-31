@@ -1,6 +1,4 @@
 use clap::Parser;
-use std::fs::File;
-use std::io::BufReader;
 
 #[derive(Debug)]
 struct CustomError(String);
